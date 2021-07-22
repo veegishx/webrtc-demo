@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-peer": "cd server && node signalling-server.js",
-    "start-express": "cd client && node server.js",
+    "start-peer": "cd server && npm install && node signalling-server.js",
+    "start-express": "cd client && npm install && node server.js",
     "start-all": "npm-run-all -p -r start-peer start-express"
   },
   "repository": {
