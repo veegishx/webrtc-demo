@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRTC PeerJS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6b1ccdb231.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="messenger">
+        <div class="messenger__status-bar">
+            <span class="messenger__status-bar--connected_peer">📡 Waiting for peer to connect</span>
+        </div>
+
+        <div class="messenger__body">
+            <!-- The ID of your current session -->
+            <div class="messenger-form">
+                <div class="messenger-form__my-peer-id"></div>
+                <div class="messenger-form__form-group">
+                    <input type="text" name="name" id="name" placeholder="Your random username">
+                    <input type="text" name="peer-id" id="peer-id" placeholder="Peer ID" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    <!-- Show message if someone connected to the client -->
+                    <button class="messenger-form__connect-btn">Connect to Peer</button>
+                    <div class="messenger-form__connected-peer-notification--hidden">
+                        A user has already connected to your session
+                    </div>
+                </div>
+            </div>
+
+            <div class="messenger-chat hidden">
+                <div class="messenger-chat__body">
+                    <div class="messenger-chat__list messages"></div>
+                </div>
+                <div class="messenger-chat__actions">
+                    <button class="call">CALL <i class="fas fa-phone"></i></button>
+                    <input type="text" name="message" id="message" placeholder="Type a message">
+                    <button class="btn btn-success send-message">SEND <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+        Include the Client Side version of peer.js 
+        using a script tag !
+    -->
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+
+    <!-- Include the scripts that will handle the chat -->
+    <script src="resources/js/main.js"></script>
+</body>
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .messenger-form {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 25%;
+    }
+
+    .messenger__status-bar {
+        background: #2196f3;
+        padding: 10px;
+        height: 40px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: white;
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    .messenger__body {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .messenger-form__connected-peer-notification {
+        background: #daeeff;
+        padding: 10px;
+        color: #008eff;
+        border-radius: 4px;
+        width: fit-content;
+        max-width: 350px;
+        text-align: center;
+        margin: 10px auto;
+    }
+
+    .messenger-form__connected-peer-notification--hidden {
+        display: none;
+    }
+
+    .messenger-form__my-peer-id {
+        background: #ececec;
+        width: fit-content;
+        padding: 5px 10px;
+        border-radius: 4px;
+        margin: 13px auto;
+        cursor: pointer;
+    }
+
+    .messenger-form__form-group {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 6px;
+        margin: 0px auto;
+        width: 100%;
+    }
+
+    .messenger-form__connect-btn {
+        width: 100%;
+        max-width: 352px;
+        padding: 10px;
+        margin: 0px auto;
+        background: #e2ffe2;
+        color: #00a507;
+        border: 1px solid #00a507;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .messenger-chat__list.messages {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .messenger-chat__actions {
+        gap: 10px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px 0;
+        display: inline-flex;
+        flex-direction: row;
+        background: #f9f9f9;
+        justify-content: center;
+    }
+
+    .message-body.text-right {
+        align-self: flex-start;
+    }
+
+    .message-body.text-right {
+        align-self: flex-end;
+    }
+
+
+    input[name="message"] {
+        padding: 10px;
+        border: 2px solid #dadada;
+        border-radius: 4px;
+        width: 100%;
+        max-width: 210px;
+        font-family: sans-serif;
+    }
+
+    input[name="name"] {
+        width: 100%;
+        max-width: 330px;
+        padding: 10px;
+        border: 2px solid #dadada;
+        border-radius: 4px;
+        margin: 0px auto;
+        font-family: sans-serif;
+    }
+
+    input[name="peer-id"] {
+        width: 100%;
+        max-width: 330px;
+        padding: 10px;
+        border: 2px solid #dadada;
+        border-radius: 4px;
+        margin: 0px auto;
+        font-family: sans-serif;
+    }
+
+    .send-message, .call {
+        cursor: pointer;
+        padding: 10px 15px;
+        background: #dff1ff;
+        border-radius: 4px;
+        border: 1px solid #2196f3;
+        color: #2196f3;
+        font-weight: 500;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .messenger-form__my-peer-id {
+        padding: 6px 25px;
+        background: #d1ecff;
+        width: fit-content;
+        color: black;
+        border-radius: 2px;
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-family: 'Fira Code', monospace;
+    }
+
+    .message-body {
+        min-width: 100px;
+        width: fit-content;
+        background: #ececec;
+        padding: 9px 13px 0 15px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+    }
+
+    p.message-text {
+        margin-top: 2px;
+    }
+
+    #chat {
+        min-width: 700px;
+        width: fit-content;
+        margin: 0px auto;
+    }
+
+    .message-body.text-left:first-child {
+        margin: 15px auto;
+        width: fit-content;
+        text-align: center;
+        padding: 2px 15px;
+        background: #ffdc71;
+    }
+
+    .message-body.text-left:first-child p {
+        margin-top: 10px;
+    }
+
+    .fas {
+        display: none;
+    }
+
+    @media(min-width: 480px) {
+        .fas {
+            display: inline-block;
+        }
+
+        input[name="message"] {
+            max-width: 500px;
+        }
+    }
+</style>
+</html>
