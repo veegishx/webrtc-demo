@@ -1,0 +1,25 @@
+{
+  "name": "webrtc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-peer": "cd server && node signalling-server.js",
+    "start-express": "cd client && node server.js",
+    "start-all": "npm-run-all -p -r start-peer start-express"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/veegishx/webrtc-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/veegishx/webrtc-demo/issues"
+  },
+  "homepage": "https://github.com/veegishx/webrtc-demo#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
