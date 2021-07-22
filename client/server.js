@@ -31,7 +31,8 @@ const httpsServer = https.createServer(credentials, server);
 httpServer.listen(HTTP_PORT, LAN_INTERFACE);
 httpsServer.listen(HTTPS_PORT, LAN_INTERFACE);
 
-serverUtils.startupMessage(ifaces, ports);
+// Turn off in production
+// serverUtils.startupMessage(ifaces, ports);
 
 server.get('/', (request, result) => {
   result.sendFile(path.join(__dirname + '/index.html'));
